@@ -14,10 +14,13 @@ namespace BasketballAcademyBlog.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public virtual IDbSet<Publication> Publications { get; set; }
 
         public static BlogDbContext Create()
         {
             return new BlogDbContext();
         }
+
+       
     }
 }

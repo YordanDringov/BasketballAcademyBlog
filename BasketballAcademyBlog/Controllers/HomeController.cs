@@ -10,7 +10,7 @@ namespace BasketballAcademyBlog.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("List", "Publication");
         }
     }
 }
