@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <article>
+    <article class="col-md-4">
         <header>
             <h2>
                 @Model.Title
@@ -25,7 +25,25 @@
             @Html.ActionLink("Back", "Index", "Publication", null, new { @class = "btn btn-default btn-xs" })
         </footer>
     </article>
-    <hr />
+  
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <hr />
+        <iframe width="560"
+                height="315"
+                src="@Model.Link"
+                frameborder="1"
+                allowfullscreen></iframe>
+                <hr/>
+    }
+    else
+    {
+        <hr />
+        <p class="alert-dismissible"> LOGIN OR REGISTER
+     <br> REACHING WHOLE RESOURCES FOR THIS LESSON</p>
+        <hr/>
+    }   
 </div>
 
 

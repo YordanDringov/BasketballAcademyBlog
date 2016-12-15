@@ -64,8 +64,7 @@ namespace BasketballAcademyBlog.Controllers
             return View();
         }
 
-        //POST Publication/Create
-        
+        //POST Publication/Create      
         [HttpPost]
         [Authorize]
         public ActionResult Create(Publication publication)
@@ -140,6 +139,6 @@ namespace BasketballAcademyBlog.Controllers
                 return RedirectToAction("Index");
             }
         }
-       
+
     }
 }

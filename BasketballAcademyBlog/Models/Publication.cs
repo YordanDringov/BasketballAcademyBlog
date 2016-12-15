@@ -20,6 +20,8 @@ namespace BasketballAcademyBlog.Models
 
         [Required]
         public string Content { get; set; }
+        
+        public string Link { get; set; }
 
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
