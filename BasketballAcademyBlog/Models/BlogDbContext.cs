@@ -17,11 +17,11 @@ namespace BasketballAcademyBlog.Models
 
         public virtual IDbSet<Publication> Publications { get; set; }
 
+        public virtual DbSet<Comment> Comments { get; set; }
+
         public static BlogDbContext Create()
         {
             return new BlogDbContext();
         }
-
-       
     }
 }

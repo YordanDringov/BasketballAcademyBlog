@@ -211,10 +211,10 @@ namespace BasketballAcademyBlog.Controllers
         }
 
         //
-        // POST: /Account/LogOff
+        // POST: /Account/LOGOUT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LOGOUT()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");

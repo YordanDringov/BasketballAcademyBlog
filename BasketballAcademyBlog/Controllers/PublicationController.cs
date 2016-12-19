@@ -46,6 +46,7 @@ namespace BasketballAcademyBlog.Controllers
                     .Publications
                     .Where(p => p.Id == id)
                     .Include(p => p.Author)
+                    .Include(p => p.Comments)
                     .First();
 
                 if (publication == null)
@@ -69,7 +70,7 @@ namespace BasketballAcademyBlog.Controllers
         [Authorize]
         public ActionResult Create(Publication publication)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 using (var database = new BlogDbContext())
                 {
@@ -79,11 +80,12 @@ namespace BasketballAcademyBlog.Controllers
                         .First()
                         .Id;
                     publication.AuthorId = authorId;
+                    publication.DateTime = DateTime.Now;
 
                     database.Publications.Add(publication);
                     database.SaveChanges();
                     return RedirectToAction("Index");
-                }               
+                }
             }
             return View(publication);
         }
@@ -92,7 +94,7 @@ namespace BasketballAcademyBlog.Controllers
         [Authorize]
         public ActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -102,6 +104,7 @@ namespace BasketballAcademyBlog.Controllers
                 var publication = database.Publications
                     .Where(p => p.Id == id)
                     .Include(a => a.Author)
+                    .Include(p => p.Comments)
                     .First();
 
                 if (publication == null)
@@ -117,7 +120,7 @@ namespace BasketballAcademyBlog.Controllers
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(int? id)
         {
-            if(id ==null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -127,9 +130,10 @@ namespace BasketballAcademyBlog.Controllers
                 var publication = database.Publications
                     .Where(p => p.Id == id)
                     .Include(p => p.Author)
+                    .Include(p => p.Comments)
                     .First();
 
-                if(publication == null)
+                if (publication == null)
                 {
                     return HttpNotFound();
                 }
@@ -140,5 +144,41 @@ namespace BasketballAcademyBlog.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comment ([Bind(Include ="postID, name, message")] int postID, string name, string message)
+        {
+            var database = new BlogDbContext();
+            Publication publication = database.Publications.Find(postID);
+            Comment comment = new Comment();
+            comment.postID = postID;
+            comment.Email = User.Identity.Name;
+            comment.CreatedDate = DateTime.Now;
+            comment.Name = User.Identity.Name;
+            comment.Body = message;
+            comment.Publication = publication;
+
+            database.Comments.Add(comment);
+            database.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public ActionResult DeleteComment (int id)
+        {
+            using (var database = new BlogDbContext())
+            {
+                Comment comment = database.Comments.Find(id);
+                if(comment ==null)
+                {
+                    return HttpNotFound();
+                }
+                database.Comments.Remove(comment);
+                database.SaveChanges();
+
+                return View("Index", new { id = comment.postID });
+            }
+        }
     }
 }

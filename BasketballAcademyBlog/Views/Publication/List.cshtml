@@ -1,34 +1,32 @@
 ﻿@model List<BasketballAcademyBlog.Models.Publication>
 
-@{ 
+@{
     ViewBag.Title = "List";
 }
-
 <div class="container">
-
+    <div class="row">
         @foreach (var publication in Model)
         {
-            <div class="col-sm-12">
-                <article>
-                    <header>
-                        <h2>
-                            <img src="~/Content/images/icon.png" width="45" height="60" />
-                            @Html.ActionLink(@publication.Title, "ReadPost", "Publication", new { @id = publication.Id }, null)                           
-                        </h2>
-                    </header>
-                    <p>
-                        @publication.Content
-                    </p>
-                    <footer class="pull-right">
-                        <small class="author">
-                            Posted by @publication.Author.FullName
-                        </small>
-                    </footer>
-                </article>
-            </div>
+            <article class="col-sm-6">
+                <header>
+                    <h2>
+                        <img src="~/Content/images/icon.png" width="45" height="60" />
+                        @Html.ActionLink(@publication.Title, "ReadPost", "Publication", new { @id = publication.Id }, null)
+                    </h2>
+                </header>
+                <p>
+                    @publication.Content.Substring(0, 100)...
+                    @Html.ActionLink("Read more", "ReadPost", "Publication", new { @id = publication.Id }, null)
+                </p>
+                <footer>
+                    <small class="author">
+                        Posted by @publication.Author.FullName
+                        <br>
+                        On Date: @publication.DateTime
+                    </small>
+                </footer>
+            </article>
         }
+    </div>
 </div>
-<hr />
-
-
-
+       

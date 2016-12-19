@@ -21,10 +21,14 @@ namespace BasketballAcademyBlog.Models
         [Required]
         public string Content { get; set; }
         
+        public DateTime DateTime { get; set; }
+        
         public string Link { get; set; }
 
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
 
