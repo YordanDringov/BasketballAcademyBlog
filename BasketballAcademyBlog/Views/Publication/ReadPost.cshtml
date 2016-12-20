@@ -63,7 +63,7 @@
                         <h4 class="comment-caption text-info">@comment.Name</h4>
                         <p>@Html.Encode(comment.Body)</p>
                         <small>@comment.CreatedDate</small>
-                        @if (User.IsInRole("Admin"))
+                        @if (comment.isAuthor(User.Identity.Name, comment) || User.IsInRole("Admin"))
                         {
                             @Html.ActionLink("Delete comment", "DeleteComment", new { id = comment.ID }, new { @class = "text-danger" })
                         }

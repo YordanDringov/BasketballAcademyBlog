@@ -84,7 +84,7 @@ namespace BasketballAcademyBlog.Controllers
 
                     database.Publications.Add(publication);
                     database.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("List");
                 }
             }
             return View(publication);
@@ -161,7 +161,7 @@ namespace BasketballAcademyBlog.Controllers
 
             database.Comments.Add(comment);
             database.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("");
         }
 
         [Authorize]
@@ -177,7 +177,7 @@ namespace BasketballAcademyBlog.Controllers
                 database.Comments.Remove(comment);
                 database.SaveChanges();
 
-                return View("Index", new { id = comment.postID });
+                return RedirectToAction("");
             }
         }
     }

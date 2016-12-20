@@ -15,7 +15,7 @@
                     </h2>
                 </header>
                 <p>
-                    @publication.Content.Substring(0, 100)...
+                    @publication.Content.Substring(0, @publication.Content.Length/3)...
                     @Html.ActionLink("Read more", "ReadPost", "Publication", new { @id = publication.Id }, null)
                 </p>
                 <footer>
